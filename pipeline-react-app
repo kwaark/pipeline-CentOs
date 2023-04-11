@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Checkout
+echo Inicianto etapa de checkout
+echo
+cd /repository
+echo Limpando repositorio
+echo
+rm -rf lab-ERP-React
+echo Baixando projeto
+echo
+git clone -b test2 https://github.com/kwaark/lab-ERP-React.git
+
+# Build
+echo
+echo Iniciando etapa de build
+echo
+cd /repository/lab-ERP-React
+echo Instalando dependencias
+echo
+npm install
+echo Compilando projeto
+npm run build
+
+# Deploy
+echo
+echo Iniciando etapa de deploy
+echo Parando aplicação
+echo
+systemctl stop react-app
+echo Deletando pasta /app/react-app
+echo
+rm -rf /app/react-app
+echo Movendo build para /app/react-app
+echo
+mv /repository/lab-ERP-React/build /app/react-app
+echo Iniciando aplicação
+echo
+systemctl start react-app
